@@ -1,6 +1,6 @@
-# TFA3 POS: Forms, Validation, and Avatar Upload
+# TFA6 POS: Database-Backed Customer and User Accounts
 
-A clean CodeIgniter 4 POS account manager based on the TFA2 customer and user fields. It adds create/edit forms, server-side validation, and optional user avatar uploads on the edit form.
+A CodeIgniter 4 POS account manager that rebuilds the array-based customer and user pages with a real database. The application uses migrations, a repeatable seeder, framework models, controller queries, and server-rendered account lists.
 
 ## Features
 
@@ -13,6 +13,17 @@ A clean CodeIgniter 4 POS account manager based on the TFA2 customer and user fi
 - Uploaded images are cropped to 256 × 256 display-ready copies in public/uploads/avatars; the database stores only a generated filename.
 - The User Accounts list displays the avatar or a placeholder.
 - Database migration and seeder plus a MySQL export are included.
+
+## TFA6 activity coverage
+
+The database-backed implementation covers the required activity outcomes:
+
+- `customers` migration fields: `full_name`, `email`, and `phone`.
+- `users` migration fields: unique `username` and `full_name`.
+- `PosDemoSeeder` inserts five sample customers and five sample users.
+- `CustomerModel` and `UserModel` provide the application data layer.
+- `Customers` and `Users` controllers retrieve records through those models before rendering the existing account views.
+- The list views continue to display the same customer and user data while reading from the database.
 
 ## Requirements
 
@@ -37,7 +48,7 @@ A clean CodeIgniter 4 POS account manager based on the TFA2 customer and user fi
 
        php spark serve
 
-The migrations create the TFA2 customer/user tables, then add the TFA3 avatar column. The seeder adds five demo customers and five demo users. The SQL export at sql/pos_tfa3.sql creates the same final schema and demo records. Use either migrations/seeder or the SQL export on an empty database, not both.
+The migrations create the customer/user tables, then add the optional avatar column used by the user edit flow. The seeder adds five demo customers and five demo users. The SQL export at `sql/pos_tfa3.sql` creates the same final schema and demo records. Use either migrations/seeder or the SQL export on an empty database, not both.
 
 ## Temporary public preview with Cloudflare
 
@@ -61,12 +72,11 @@ Test validation by submitting empty customer fields, an invalid email, a blank u
 
 ## GitHub submission
 
-After testing, create a new public, empty repository under johneinstein23 named pos-tfa3-forms-validation-upload. From a terminal in the generated app folder, run:
+This repository contains the raw project files, migrations, seeder, models, views, and SQL export required for submission. To publish a new commit from a configured clone, run:
 
        git init -b main
        git add .
-       git commit -m "Build TFA3 POS forms and avatar uploads"
-       git remote add origin https://github.com/johneinstein23/pos-tfa3-forms-validation-upload.git
+       git commit -m "Complete TFA6 database-backed POS activity"
        git push -u origin main
 
 The .gitignore excludes .env, vendor, writable runtime files, and uploaded avatar files. Never commit database passwords or real customer photos.
